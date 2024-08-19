@@ -1,0 +1,8 @@
+[profiler_otlp]
+service_name_prefix = nova
+
+[profiler]
+enabled = True
+trace_sqlalchemy = True
+trace_requests = True
+connection_string = otlp://127.0.0.1:4318
