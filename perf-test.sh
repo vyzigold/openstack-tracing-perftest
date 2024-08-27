@@ -13,7 +13,7 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-set -ex
+#set -ex
 
 
 
@@ -108,7 +108,6 @@ download_image() {
 }
 
 perf_test_scenario() {
-	set -ex
 	####################
 	# Create resources #
 	####################
@@ -145,7 +144,7 @@ perf_test_scenario() {
 	# Create an instance
 	$OS_CMD server show test || {
 	    $OS_CMD server create --flavor m1.small --image cirros --nic net-id=private test --security-group basic
-	    # I want to wait for the server to finish creating here. Adding --wait above doesn't work with OSProfiler.
+	    # I want to wait for the server to finish creating here. Adding --wait above doesn't work with OSProfiler. <-- need to confirm
 	    # So wait by calling a few openstack * list.
 	    wait_by_listing
 	    wait_by_listing
@@ -192,8 +191,8 @@ execute_testing() {
 			rm -f $RESULT_FILE
 		fi
 		echo Starting a cycle $i out of $CYCLES
-		#TIME=$({ time perf_test_scenario 2> /dev/null > /dev/null; } 2>&1)
-		TIME=$({ time perf_test_scenario; } 2>&1)
+		TIME=$({ time perf_test_scenario 2> /dev/null > /dev/null; } 2>&1)
+		#TIME=$({ time perf_test_scenario; } 2>&1)
 		echo Last cycle took $TIME
 		echo -n $TIME >> $RESULT_FILE
 		if [[ $i -lt $CYCLES ]]; then
