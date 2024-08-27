@@ -1,0 +1,15 @@
+
+[Unit]
+Description = Devstack devstack@n-cpu.service
+
+[Service]
+Group = libvirtd
+ExecReload = /bin/kill -HUP $MAINPID
+TimeoutStopSec = 300
+KillMode = process
+ExecStart = /usr/local/bin/nova-compute --config-file /etc/nova/nova-cpu.conf
+User = stack
+Environment = "PATH=/usr/local/bin:/bin:/opt/stack/.local/bin:/opt/stack/bin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin"
+
+[Install]
+WantedBy = multi-user.target

@@ -1,0 +1,18 @@
+
+[Unit]
+Description = Devstack devstack@g-api.service
+
+[Service]
+RestartForceExitStatus = 100
+NotifyAccess = all
+Restart = always
+KillMode = process
+Type = notify
+ExecReload = /bin/kill -HUP $MAINPID
+ExecStart = /opt/stack/.local/bin/opentelemetry-instrument --traces_exporter console --metrics_exporter none --service_name glance-api --log_level debug /usr/local/bin/uwsgi --procname-prefix glance-api --ini /etc/glance/glance-uwsgi.ini
+User = stack
+SyslogIdentifier = devstack@g-api.service
+Environment = "PATH=/bin:/opt/stack/.local/bin:/opt/stack/bin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/sbin"
+
+[Install]
+WantedBy = multi-user.target
